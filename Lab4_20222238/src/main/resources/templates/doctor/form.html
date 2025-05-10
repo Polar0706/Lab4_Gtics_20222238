@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Formulario Doctor</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<h2 th:text="${doctor.id == null} ? 'Registrar Doctor' : 'Editar Doctor'"></h2>
+
+<form th:action="@{/doctors/save}" th:object="${doctor}" method="post">
+  <input type="hidden" th:field="*{id}"/>
+
+  <label>Nombre completo:</label>
+  <input type="text" th:field="*{nombreCompleto}"/>
+  <span th:if="${#fields.hasErrors('nombreCompleto')}" th:errors="*{nombreCompleto}"></span><br/>
+
+  <label>DNI:</label>
+  <input type="text" th:field="*{dni}"/>
+  <span th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></span><br/>
+
+  <label>Teléfono:</label>
+  <input type="text" th:field="*{telefono}"/>
+  <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span><br/>
+
+  <label>Correo:</label>
+  <input type="email" th:field="*{correo}"/>
+  <span th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></span><br/>
+
+  <label>Fecha de incorporación:</label>
+  <input type="date" th:field="*{fechaIncorporacion}"/>
+  <span th:if="${#fields.hasErrors('fechaIncorporacion')}" th:errors="*{fechaIncorporacion}"></span><br/>
+
+  <label>Estado:</label>
+  <select th:field="*{estado}">
+    <option value="">-- Seleccionar --</option>
+    <option>Activo</option>
+    <option>Inactivo</option>
+    <option>Jubilado</option>
+  </select>
+  <span th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></span><br/>
+
+  <div th:if="${dbError}" th:text="${dbError}"></div>
+
+  <button type="submit">Guardar</button>
+  <a th:href="@{/doctors}">Cancelar</a>
+</form>
+
+</body>
+</html>
